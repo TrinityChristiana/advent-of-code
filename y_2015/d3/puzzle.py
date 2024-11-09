@@ -6,8 +6,16 @@ ROBOT = "robot"
 LOCATION = 'location'
 HOUSES = 'houses'
 
+starting_location = [0,0]
+
+default_data = {
+  LOCATION: starting_location,
+  HOUSES: {f'{starting_location}': None}
+}
+
 def update_location(location, direction):
   x, y = location
+
   if direction == "^":
     location[1] = y + 1
   elif direction == "v":
@@ -16,6 +24,7 @@ def update_location(location, direction):
     location[0] = x + 1
   elif direction == "<":
     location[0] = x - 1
+
   return location
 
 """
@@ -29,17 +38,17 @@ How many houses receive at least one present?
 (starting location gets present automatically)
 """
 def puzzle_solution_part_1(input):
-  current_location = [0,0]
-  houses = {f'{current_location}': None}
+  current_loc = [0,0]
+  houses = {f'{current_loc}': None}
 
   for direction in input:
-    current_location = update_location(
-      current_location,
+    current_loc = update_location(
+      current_loc,
       direction
     )
 
-    houses .setdefault(
-      f"{current_location}",
+    houses.setdefault(
+      f"{current_loc}",
       None
     )
 
@@ -48,11 +57,6 @@ def puzzle_solution_part_1(input):
 
 
 def puzzle_solution_part_2(input):
-  default_data = {
-    LOCATION:[0,0],
-    HOUSES: {f'{[0,0]}': None}
-  }
-
   data = {
     SANTA: copy.deepcopy(default_data),
     ROBOT: copy.deepcopy(default_data)
@@ -61,23 +65,19 @@ def puzzle_solution_part_2(input):
   santa_turn = True
 
   for direction in input:
-    deliverer = SANTA
+    deliverer = SANTA if not santa_turn else ROBOT
 
+    current_loc = data[deliverer][LOCATION]
 
-    if not santa_turn:
-      deliverer = ROBOT
-
-    current_location = data[deliverer][LOCATION]
-
-    current_location = update_location(
-        current_location,
+    current_loc = update_location(
+        current_loc,
         direction
     )
 
-    data[deliverer][LOCATION] = current_location
+    data[deliverer][LOCATION] = current_loc
 
     data[deliverer][HOUSES].setdefault(
-        f"{current_location}",
+        f"{current_loc}",
         None
     )
 
