@@ -1,5 +1,6 @@
-from y_2015.d3.puzzle_input import puzzle_input
 import copy
+
+from y_2015.d3.puzzle_input import puzzle_input
 
 SANTA = "santa"
 ROBOT = "robot"
@@ -9,7 +10,7 @@ HOUSES = 'houses'
 starting_location = [0,0]
 
 default_data = {
-  LOCATION: starting_location,
+  LOCATION: copy.deepcopy(starting_location),
   HOUSES: {f'{starting_location}': None}
 }
 
@@ -38,8 +39,8 @@ How many houses receive at least one present?
 (starting location gets present automatically)
 """
 def puzzle_solution_part_1(input):
-  current_loc = [0,0]
-  houses = {f'{current_loc}': None}
+  current_loc = copy.deepcopy(starting_location)
+  houses = {f'{starting_location}': None}
 
   for direction in input:
     current_loc = update_location(
@@ -55,7 +56,6 @@ def puzzle_solution_part_1(input):
   return len(houses.keys())
 
 
-
 def puzzle_solution_part_2(input):
   data = {
     SANTA: copy.deepcopy(default_data),
@@ -65,7 +65,7 @@ def puzzle_solution_part_2(input):
   santa_turn = True
 
   for direction in input:
-    deliverer = SANTA if not santa_turn else ROBOT
+    deliverer = SANTA if santa_turn else ROBOT
 
     current_loc = data[deliverer][LOCATION]
 
