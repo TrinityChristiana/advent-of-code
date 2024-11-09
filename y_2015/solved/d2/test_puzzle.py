@@ -1,5 +1,4 @@
-from y_2015.solved.d2.puzzle import puzzle_solution_part_1
-from y_2015.solved.d2.puzzle import puzzle_solution_part_2
+from .puzzle import puzzle_solution_part_1, puzzle_solution_part_2
 import pytest
 
 

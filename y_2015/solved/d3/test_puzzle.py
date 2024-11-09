@@ -3,22 +3,19 @@ import pytest
 
 
 @pytest.mark.parametrize("input, expected_result", [
-    ("(())", 0),
-    ("()()", 0),
-    ("(((", 3),
-    ("(()(()(", 3),
-    ("))(((((", 3),
-    ("())", -1),
-    ("))(", -1),
-    (")))", -3),
-    (")())())", -3),
+    (">", 2),
+    ("^>v<", 4),
+    ("^v^v^v^v^v", 2),
+
 ])
-def test_puzzle(input, expected_result):
+def test_puzzle_part_1(input, expected_result):
     assert puzzle_solution_part_1(input) == expected_result
 
+
 @pytest.mark.parametrize("input, expected_result", [
-    (")", 1),
-    ("()())", 5),
+    ("^v", 3),
+    ("^>v<", 3),
+    ("^v^v^v^v^v", 11),
 ])
-def test_puzzle_2(input, expected_result):
+def test_puzzle_part_2(input, expected_result):
     assert puzzle_solution_part_2(input) == expected_result
